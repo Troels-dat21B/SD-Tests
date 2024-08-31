@@ -1,0 +1,21 @@
+# Python bytecode files
+__pycache__/
+*.py[cod]
+
+# pytest cache directory
+.pytest_cache/
+
+# Virtual environment
+venv/
+.env/
+
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+*.so
+*.dylib
+*.dll
+
+# Unit test / coverage results
+.coverage
+.tox/
+.nox/
