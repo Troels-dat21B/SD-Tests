@@ -5,7 +5,6 @@ public class Employee
     private string _cpr;    
     private string _name;
     private string _surName;
-    private string _fullName => $"{_name} {_surName}";
     //Date of birth
     private DateTime _dob;
     
@@ -92,7 +91,145 @@ public class Employee
         _country = country;
     }
 
+    #region Getters and Setters
 
+    public string Cpr{
+        get{
+            return _cpr;
+        }
+        set{
+            if(value.Length != 10){
+                throw new ArgumentException("CPR must be 10 characters long");
+            }else if(!value.All(char.IsDigit)){
+                throw new ArgumentException("CPR must be a number");
+        }else{
+                _cpr = value;
+            }
+        }
+    }
+
+    public string Name{
+        get{
+            return _name;
+        }
+        set{
+            if(value.Length < 1 || value.Length > 30){
+                throw new ArgumentException("Name must be at least 1 characters long");
+            }else if(value.Length > 30){
+                throw new ArgumentException("Name must be at most 30 characters long");
+            }else{
+                _name = value;
+            }
+        }
+    }
+
+    public string SurName{
+        get{
+            return _surName;
+        }
+        set{
+            if(value.Length < 1 || value.Length > 30){
+                throw new ArgumentException("Surname must be at least 1 characters long");
+            }else if(value.Length > 30){
+                throw new ArgumentException("Surname must be at most 30 characters long");
+            }else{
+                _surName = value;
+            }
+        }
+    }
+
+    public DateTime Dob{
+        get{
+            return _dob;
+        }
+        set{
+            if(value > DateTime.Now){
+                throw new ArgumentException("Date of birth must be in the past");
+            }else if(value < DateTime.Now.AddYears(-120)){
+                throw new ArgumentException("Date of birth must be within the last 120 years");
+            }else if(value > DateTime.Now.AddYears(-18)){
+                throw new ArgumentException("Date of birth must be at least 18 years ago");
+            }else{
+                _dob = value;
+            }
+        }
+    }
+
+    public Department Department{
+        get{
+            return _department;
+        }
+        set{
+            var validDepartment = Enum.IsDefined(typeof(Department), value);
+
+            if (!validDepartment)
+            {
+                throw new ArgumentException("Department must be one of the following: IT, HR, Finance, Sales, General_Services");
+            }
+            else{
+                _department = value;
+            }
+        }
+    }
+    public decimal BaseSalary{
+        get{
+            return _baseSalary;
+        }
+        set{
+            if (value < 20000 || value > 100000)
+            {
+                throw new ArgumentException("Base salary must be within 20000 and 100000");
+            }
+            else
+            {
+                _baseSalary = value;
+            }
+        }
+    }
+
+    public EducationalLevel EducationalLevel{
+        get{
+            return _educationalLevel;
+        }
+        set{
+            if (value < EducationalLevel.None || value > EducationalLevel.Tertiary)
+            {
+                throw new ArgumentException("Educational level must be between 0 and 3");
+            }
+            else
+            {
+                _educationalLevel = value;
+            }
+        }
+    }
+
+    public DateTime Date_of_employment{
+        get{
+            return _date_of_employment;
+        }
+        set{
+            if(value > DateTime.Now){
+                throw new ArgumentException("Date of employment must be in the past");
+            }else if(value < DateTime.Now.AddYears(-120)){
+                throw new ArgumentException("Date of employment must be within the last 120 years");
+            }else{
+                _date_of_employment = value;
+            }
+        }
+    }
+    
+    public string Country{
+        get{
+            return _country;
+        }
+        set{
+            _country = value;
+        }
+    }
+
+    #endregion
+
+    #region Methods
 
     public decimal GetSalary()
     {
@@ -127,5 +264,8 @@ public class Employee
             return 1;
         }
     }
+
+    #endregion
+
  }
 }
